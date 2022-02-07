@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "WebArt",
+    "slug": "WebArt",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "WebArt"
+}
