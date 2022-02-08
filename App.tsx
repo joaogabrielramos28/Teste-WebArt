@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import AppLoading from "expo-app-loading";
 import theme from "./src/global/styles/theme";
+import { ShoppinList } from "./src/screens/ShoppingList";
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
@@ -13,7 +14,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Text>WebArt</Text>
+      <ShoppinList />
     </ThemeProvider>
   );
 }
