@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Form } from "../../components/Form";
-import { Keyboard, Text, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Product } from "../../components/Product";
 import {
   Container,
@@ -18,17 +20,16 @@ export interface ProductsProps {
   name: string;
   isSelected: boolean;
 }
+interface CountProductsProps {
+  total: number;
+  selecteds: number;
+}
 
 export function ShoppingList() {
   const [products, setProducts] = useState<ProductsProps[]>([]);
+  const [countProducts, setCountProducts] = useState<CountProductsProps>({});
 
-  let totalProducts: number = products.length;
-  let totalSelectedProducts = products.reduce((acummulator, item) => {
-    return item.isSelected ? (acummulator += 1) : 0;
-  }, 0);
-  console.log(totalSelectedProducts);
-
-  function handleAddProduct(name: string) {
+  async function handleAddProduct(name: string) {
     const product = {
       id: String(new Date().getTime()),
       name,
@@ -36,14 +37,57 @@ export function ShoppingList() {
     };
 
     setProducts([...products, product]);
+    try {
+      const data = await AsyncStorage.getItem("@WebArt:products");
+      const currentData = data ? JSON.parse(data) : [];
+      const newProductList = [...currentData, product];
+      await AsyncStorage.setItem(
+        "@WebArt:products",
+        JSON.stringify(newProductList)
+      );
+    } catch (err) {}
   }
-  function handleRemoveProduct(id: string) {
+
+  async function loadProducts() {
+    const dataKey = "@WebArt:products";
+    const response = await AsyncStorage.getItem(dataKey);
+    const products = response ? JSON.parse(response) : [];
+
+    setProducts(products);
+  }
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  useEffect(() => {
+    async function countProducts() {
+      const dataKey = "@WebArt:products";
+      const response = await AsyncStorage.getItem(dataKey);
+      const productsList = response ? JSON.parse(response) : [];
+      let totalProducts: number = products.length;
+
+      let totalSelectedProducts: [] = productsList.filter(
+        (product: ProductsProps) => product.isSelected
+      );
+
+      setCountProducts({
+        total: totalProducts,
+        selecteds: totalSelectedProducts.length,
+      });
+    }
+
+    countProducts();
+  }, [products]);
+
+  async function handleRemoveProduct(id: string) {
     const newList = products.filter((product) => product.id !== id);
 
     setProducts(newList);
+    await AsyncStorage.setItem("@WebArt:products", JSON.stringify(newList));
   }
 
-  function handleSelectProduct(id: string) {
+  async function handleSelectProduct(id: string) {
     const newList = products.map((product) => {
       if (product.id === id) {
         product = {
@@ -55,6 +99,7 @@ export function ShoppingList() {
       return product;
     });
     setProducts(newList);
+    await AsyncStorage.setItem("@WebArt:products", JSON.stringify(newList));
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -63,7 +108,7 @@ export function ShoppingList() {
           <Title>Lista de compras</Title>
           {products.length > 0 && (
             <Count>
-              {totalSelectedProducts}/{totalProducts}
+              {countProducts.selecteds}/{countProducts.total}
             </Count>
           )}
         </Header>
