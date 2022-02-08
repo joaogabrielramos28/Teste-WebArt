@@ -7,15 +7,21 @@ interface FormProps {
 export function Form({ onPress }: FormProps) {
   const [productName, setProductName] = useState("");
 
+  function handleAddProduct(productName: string) {
+    onPress(productName);
+
+    setProductName("");
+  }
   return (
     <Container>
       <InputForm
         placeholder="Novo item da lista"
         onChangeText={setProductName}
-        onSubmitEditing={() => onPress(productName)}
+        onSubmitEditing={() => handleAddProduct(productName)}
+        value={productName}
       />
 
-      <ButtonForm onPress={() => onPress(productName)}>
+      <ButtonForm onPress={() => handleAddProduct(productName)}>
         <Plus name="plus" />
       </ButtonForm>
     </Container>

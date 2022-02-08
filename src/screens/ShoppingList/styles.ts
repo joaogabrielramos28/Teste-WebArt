@@ -17,6 +17,21 @@ export const Header = styled.View`
   padding: 4px 12px;
 `;
 
+export const NoItemContainer = styled.View`
+  width: 100%;
+  flex: 1;
+  align-items: center;
+
+  padding: 20px 0;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+export const NoItemMessage = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${RFValue(16)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
 export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.regular};

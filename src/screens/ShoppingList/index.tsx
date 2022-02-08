@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Form } from "../../components/Form";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, Text, TouchableWithoutFeedback } from "react-native";
 import { Product } from "../../components/Product";
 import {
   Container,
   Header,
+  NoItemContainer,
+  NoItemMessage,
   ListContainer,
   Title,
   Count,
@@ -19,6 +21,13 @@ export interface ProductsProps {
 
 export function ShoppingList() {
   const [products, setProducts] = useState<ProductsProps[]>([]);
+
+  let totalProducts: number = products.length;
+  let totalSelectedProducts = products.reduce((acummulator, item) => {
+    return item.isSelected ? (acummulator += 1) : 0;
+  }, 0);
+  console.log(totalSelectedProducts);
+
   function handleAddProduct(name: string) {
     const product = {
       id: String(new Date().getTime()),
@@ -52,24 +61,32 @@ export function ShoppingList() {
       <Container>
         <Header>
           <Title>Lista de compras</Title>
-          <Count>3/8</Count>
+          {products.length > 0 && (
+            <Count>
+              {totalSelectedProducts}/{totalProducts}
+            </Count>
+          )}
         </Header>
-
         <ListContainer>
-          <ProductList
-            data={products}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Product
-                name={item.name}
-                id={item.id}
-                isSelected={item.isSelected}
-                onDelete={handleRemoveProduct}
-                onSelected={handleSelectProduct}
-              />
-            )}
-          />
-
+          {products.length == 0 ? (
+            <NoItemContainer>
+              <NoItemMessage>Nenhum item na lista</NoItemMessage>
+            </NoItemContainer>
+          ) : (
+            <ProductList
+              data={products}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <Product
+                  name={item.name}
+                  id={item.id}
+                  isSelected={item.isSelected}
+                  onDelete={handleRemoveProduct}
+                  onSelected={handleSelectProduct}
+                />
+              )}
+            />
+          )}
           <Form onPress={handleAddProduct} />
         </ListContainer>
       </Container>
