@@ -24,3 +24,10 @@ export const Count = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(20)}px;
 `;
+
+export const ProductList = styled.View`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.shape};
+
+  padding: 0 4px;
+`;

@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Header, Title, Count } from "./styles";
+import { Product } from "../../components/Product";
+import { Container, Header, Title, Count, ProductList } from "./styles";
 export function ShoppinList() {
   return (
     <Container>
@@ -7,6 +8,13 @@ export function ShoppinList() {
         <Title>Lista de compras</Title>
         <Count>3/8</Count>
       </Header>
+
+      <ProductList>
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+      </ProductList>
     </Container>
   );
 }

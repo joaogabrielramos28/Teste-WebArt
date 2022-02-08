@@ -4,6 +4,7 @@ export default {
     success: "#3FAF47",
     failure: "#FF8888",
     text: "#6E6E6E",
+    text_light: "rgba(110,110,110,0.3)",
     shape: "#FFF",
   },
 
