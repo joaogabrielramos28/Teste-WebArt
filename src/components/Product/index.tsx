@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert } from "react-native";
 import {
   Container,
@@ -7,9 +7,11 @@ import {
   MarkContent,
   DoneIcon,
   Name,
+  InputEdit,
   Actions,
   Edit,
   Close,
+  Save
 } from "./styles";
 
 interface ProductsProps {
@@ -18,6 +20,7 @@ interface ProductsProps {
   isSelected: boolean;
   onDelete: (id: string) => void;
   onSelected: (id: string) => void;
+  onEdit:(id:string,newName:string)=>void;
 }
 
 export function Product({
@@ -26,7 +29,10 @@ export function Product({
   isSelected,
   onDelete,
   onSelected,
+  onEdit
 }: ProductsProps) {
+  const [isEditing,setIsEditing] = useState(false);
+  const [newProductName,setNewProductName] = useState(name);
   function handleRemoveProduct(id: string) {
     Alert.alert(
       "Remover item",
@@ -44,6 +50,19 @@ export function Product({
       ]
     );
   }
+  function handleSetEditingModeOn(){
+    setIsEditing(true)
+  }
+  function handleSetEditingModeOff(){
+    setIsEditing(false)
+  }
+
+  function handleEditProduct(id:string,newName:string){
+    onEdit(id,newName)
+
+    setIsEditing(false)
+  
+  }
 
   return (
     <Container isSelected={isSelected}>
@@ -53,15 +72,34 @@ export function Product({
             {isSelected && <DoneIcon name="check" />}{" "}
           </MarkContent>
         </Mark>
-        <Name isSelected={isSelected}>{name}</Name>
+        {isEditing ? (
+          <InputEdit value={newProductName} defaultValue={newProductName} onChangeText={setNewProductName} onSubmitEditing={()=>handleEditProduct(id,newProductName)} />
+        ):(
+          <Name isSelected={isSelected}>{name}</Name>
+        )}
       </ProductInfo>
 
       <Actions>
-        <Edit name="edit-2" />
-        <Close
-          name="close-circle-sharp"
-          onPress={() => handleRemoveProduct(id)}
-        />
+        {isEditing ? (
+          <>
+          <Save name="checkmark-circle" onPress={()=>handleEditProduct(id,newProductName)}  />
+          <Close
+            name="close-circle-sharp"
+            onPress={handleSetEditingModeOff}
+          />
+          </>
+        ) : (
+          <>
+           <Edit name="edit-2" onPress={handleSetEditingModeOn} />
+          <Close
+            name="close-circle-sharp"
+            onPress={() => handleRemoveProduct(id)}
+            
+          />
+          
+          </>
+        )}
+        
       </Actions>
     </Container>
   );

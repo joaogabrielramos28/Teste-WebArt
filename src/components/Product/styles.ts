@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components/native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Ionicons, Feather } from "@expo/vector-icons";
+import theme from "../../global/styles/theme";
 
 interface ProductStyleProps {
   isSelected: boolean;
@@ -17,7 +18,7 @@ export const Container = styled.View<ProductStyleProps>`
   margin:4px 0;
 
   background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.success_light : theme.colors.shape}
+    isSelected ? theme.colors.success_light : theme.colors.shape};
 `;
 
 export const ProductInfo = styled.View`
@@ -55,24 +56,36 @@ export const Name = styled.Text<ProductStyleProps>`
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.text};
 
-  ${({ theme, isSelected }) =>
+  ${({  isSelected }) =>
     isSelected &&
     css`
       color: ${({ theme }) => theme.colors.success};
       text-decoration: line-through;
-      text-decoration-color: ${({ theme }) => theme.colors.success}
+      text-decoration-color: ${({ theme }) => theme.colors.success};
     `}
 `;
-
+export const InputEdit = styled.TextInput`
+font-size: ${RFValue(16)}px;
+width: ${RFPercentage(40)}px;
+color: ${({ theme }) => theme.colors.text};
+margin-left: 8px;
+border-bottom-width: 1px;
+border-bottom-color: ${({ theme }) => theme.colors.text_light};
+`
 export const Actions = styled.View`
   flex-direction: row;
 `;
 
 export const Edit = styled(Feather)`
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(20)}px;
   margin-right: 8px;
 `;
 export const Close = styled(Ionicons)`
   color: ${({ theme }) => theme.colors.failure};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(20)}px;
 `;
+export const Save = styled(Ionicons)`
+  color: ${({ theme }) => theme.colors.success};
+  font-size: ${RFValue(20)}px;
+  margin-right: 8px;
+`

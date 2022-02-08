@@ -103,6 +103,22 @@ export function ShoppingList() {
     setProducts(newList);
     await AsyncStorage.setItem("@WebArt:products", JSON.stringify(newList));
   }
+
+   async function handleEditProductName(id:string,newName:string){
+    const newList = products.map((product) => {
+      if (product.id === id) {
+        product = {
+          ...product,
+          name: newName,
+        };
+      }
+
+      return product;
+    });
+
+    setProducts(newList);
+    await AsyncStorage.setItem("@WebArt:products", JSON.stringify(newList));
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -130,6 +146,7 @@ export function ShoppingList() {
                   isSelected={item.isSelected}
                   onDelete={handleRemoveProduct}
                   onSelected={handleSelectProduct}
+                  onEdit={handleEditProductName}
                 />
               )}
             />
