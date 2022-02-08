@@ -27,7 +27,9 @@ interface CountProductsProps {
 
 export function ShoppingList() {
   const [products, setProducts] = useState<ProductsProps[]>([]);
-  const [countProducts, setCountProducts] = useState<CountProductsProps>({});
+  const [countProducts, setCountProducts] = useState<CountProductsProps>(
+    {} as CountProductsProps
+  );
 
   async function handleAddProduct(name: string) {
     const product = {
