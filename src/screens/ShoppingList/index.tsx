@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Audio } from "expo-av";
 import { Form } from "../../components/Form";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Product } from "../../components/Product";
@@ -90,6 +90,10 @@ export function ShoppingList() {
   }
 
   async function handleSelectProduct(id: string) {
+    const {sound} = await Audio.Sound.createAsync(
+      require('../../../assets/check.mp3')
+    )
+    await sound.playAsync()
     const newList = products.map((product) => {
       if (product.id === id) {
         product = {
