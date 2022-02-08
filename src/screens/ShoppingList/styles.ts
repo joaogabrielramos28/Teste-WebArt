@@ -1,5 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
+import { ProductsProps } from ".";
+import { FlatList, FlatListProps } from "react-native";
+
 export const Container = styled.View`
   flex: 1;
 `;
@@ -31,9 +34,12 @@ export const ListContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const ProductList = styled.View`
+export const ProductList = styled(
+  FlatList as new (
+    props: FlatListProps<ProductsProps>
+  ) => FlatList<ProductsProps>
+)`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.shape};
-
   padding: 0 4px;
 `;

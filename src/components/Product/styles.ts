@@ -1,8 +1,12 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Ionicons, Feather } from "@expo/vector-icons";
 
-export const Container = styled.View`
+interface ProductStyleProps {
+  isSelected: boolean;
+}
+
+export const Container = styled.View<ProductStyleProps>`
   width: 100%;
   border-width:1px;
   border-color: ${({ theme }) => theme.colors.text_light}
@@ -11,6 +15,9 @@ export const Container = styled.View`
  justify-content: space-between;
   padding:16px 8px;
   margin:4px 0;
+
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.success_light : theme.colors.shape}
 `;
 
 export const ProductInfo = styled.View`
@@ -22,23 +29,38 @@ export const Mark = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
-export const MarkContent = styled.View`
+export const MarkContent = styled.Text<ProductStyleProps>`
   height: 20px;
   width: 20px;
   border-radius: 2px;
-  border-width: 1.6px;
+  border-width: 1.2px;
   border-color: ${({ theme }) => theme.colors.text};
   margin-right: 5px;
   align-items: center;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.success : theme.colors.shape}
+
   justify-content: center;
+  padding:1px 2px;
 `;
 
-export const DoneIcon = styled(Feather)``;
+export const DoneIcon = styled(Feather)`
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.shape};
+`;
 
-export const Name = styled.Text`
+export const Name = styled.Text<ProductStyleProps>`
   font-size: ${RFValue(16)}px;
   margin-left: 8px;
   font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme }) => theme.colors.text};
+
+  ${({ theme, isSelected }) =>
+    isSelected &&
+    css`
+      color: ${({ theme }) => theme.colors.success};
+      text-decoration: line-through;
+    `}
 `;
 
 export const Actions = styled.View`

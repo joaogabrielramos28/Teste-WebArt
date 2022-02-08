@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, InputForm, ButtonForm, Plus } from "./styles";
-export function Form() {
+
+interface FormProps {
+  onPress: (name: string) => void;
+}
+export function Form({ onPress }: FormProps) {
+  const [productName, setProductName] = useState("");
+
   return (
     <Container>
-      <InputForm placeholder="Novo item da lista" />
+      <InputForm
+        placeholder="Novo item da lista"
+        onChangeText={setProductName}
+        onSubmitEditing={() => onPress(productName)}
+      />
 
-      <ButtonForm>
+      <ButtonForm onPress={() => onPress(productName)}>
         <Plus name="plus" />
       </ButtonForm>
     </Container>
