@@ -1,10 +1,19 @@
 import React from "react";
 import { Text, View } from "react-native";
-
+import { ThemeProvider } from "styled-components";
+import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
+import AppLoading from "expo-app-loading";
+import theme from "./src/global/styles/theme";
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <View>
+    <ThemeProvider theme={theme}>
       <Text>WebArt</Text>
-    </View>
+    </ThemeProvider>
   );
 }
