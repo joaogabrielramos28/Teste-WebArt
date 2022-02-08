@@ -1,6 +1,14 @@
 import React from "react";
+import { Form } from "../../components/Form";
 import { Product } from "../../components/Product";
-import { Container, Header, Title, Count, ProductList } from "./styles";
+import {
+  Container,
+  Header,
+  ListContainer,
+  Title,
+  Count,
+  ProductList,
+} from "./styles";
 export function ShoppinList() {
   return (
     <Container>
@@ -9,12 +17,16 @@ export function ShoppinList() {
         <Count>3/8</Count>
       </Header>
 
-      <ProductList>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-      </ProductList>
+      <ListContainer>
+        <ProductList>
+          <Product />
+          <Product />
+          <Product />
+          <Product />
+        </ProductList>
+
+        <Form />
+      </ListContainer>
     </Container>
   );
 }
