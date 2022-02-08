@@ -5,7 +5,10 @@ import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import AppLoading from "expo-app-loading";
 import theme from "./src/global/styles/theme";
 import { ShoppingList } from "./src/screens/ShoppingList";
+
+
 export default function App() {
+
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
   });

@@ -15,7 +15,7 @@ export const InputForm = styled.TextInput`
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 4px;
   flex: 1;
-  padding: 4px 8px;
+  padding:${RFValue(8)}px; 8px;
   font-size: ${RFValue(14)}px;
 `;
 
