@@ -60,6 +60,7 @@ export const Name = styled.Text<ProductStyleProps>`
     css`
       color: ${({ theme }) => theme.colors.success};
       text-decoration: line-through;
+      text-decoration-color: ${({ theme }) => theme.colors.success}
     `}
 `;
 
